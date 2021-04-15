@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="tr-TR">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><%=title%></title>
+
+</head>
+<body>
+    <%-include('header.ejs')%>
+    
+    <section class="topText">
+        <h1>BORSA</h1>
+        <h2>Aradığınız ürünü en uygun fiyata bulun</h2>
+    </section>
+
+    <section class="urunAl">
+        <h3>Ürün alma isteğinde bulunun</h3>
+        <form action="" method="post">
+            <input type="text" name="urunAdi" id="indexInputText" placeholder="Ürün Adı (Buğday)">
+            <input type="number" name="urunMiktari" id="indexInputNumber" placeholder="Miktar (50 kg)">
+            <input type="submit" value="Talep Oluştur" id="indexInputSubmit">
+         </form>
+    </section>
+
+    <section class="alisverisListem">
+        <h3>Alışveriş Listem</h3>    
+        <table>
+            <tr>
+              <th>Ürün</th>
+              <th>Miktar</th>
+              <th>Durum</th>
+              <th>Tarih</th>
+            </tr>
+            <tr>
+              <td>Buğday</td>
+              <td>50 kg</td>
+              <td>Bekliyor</td>
+              <td>15.04.2021</td>
+            </tr>
+            
+          </table>
+    </section>
+
+    <section class="alisverisListem">
+        <h3>Gerçekleşen Alım-Satımlar</h3>    
+        <table>
+            <tr>
+              <th>Alıcı</th>
+              <th>Satıcı</th>
+              <th>Ürün</th>
+              <th>Miktar</th>
+              <th>Toplam Fiyat</th>
+              <th>Tarih</th>
+            </tr>
+            <tr>
+              <td>Efe</td>
+              <td>Büşra</td>  
+              <td>Buğday</td>
+              <td>50 kg</td>
+              <td>550₺</td>
+              <td>15.04.2021</td>
+            </tr>
+            
+          </table>
+    </section>
+
+    
+</body>
+</html>

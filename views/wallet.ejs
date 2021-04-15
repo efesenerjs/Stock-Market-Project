@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="tr-TR">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><%=title%></title>
+
+</head>
+<body>
+    <%-include('header.ejs')%>
+    
+    <section class="topText">
+        <h1>CÜZDANIM</h1>
+        <h2>Güncel bakiye: 350₺</h2>
+    </section>
+
+    <section class="urunAl">
+        <h3>Bakiye günceleme talebinde bulunun</h3>
+        <form action="" method="post">
+            <input type="number" name="bakiyeGuncelle" id="indexInputNumber" placeholder="Miktar ₺ (500)">
+            <input type="submit" value="Talep Oluştur" id="indexInputSubmit">
+         </form>
+    </section>
+
+    <section class="alisverisListem">
+        <h3>Beklemede Olan Bakiye Güncelleme Talebi</h3>    
+        <table>
+            <tr>
+              <th>Talep Edilen Bakiye</th>
+              <th>Durum</th>
+            </tr>
+            <tr>
+              <td>500₺</td>
+              <td>Bekliyor</td>
+            </tr>
+            
+          </table>
+    </section>
+
+    
+</body>
+</html>

@@ -1,0 +1,173 @@
+*{
+    border:0;
+    padding:0;
+    margin:0;
+}
+
+a{text-decoration: none;color:#000}
+
+body{
+    background:#fafafa;
+    font-family: 'Montserrat', sans-serif;
+}
+
+nav{
+    width:100%;
+    height:70px;
+    box-shadow: 0px 2px 8px 1px rgb(197, 197, 197);
+}
+
+.logo{
+    float:left;
+    width:180px;
+    height:100%;
+    text-align: center;
+    line-height: 70px;
+    font-weight:700;
+    letter-spacing: 5px;
+    font-size:25px;
+    margin-left:32px;
+}
+
+.navItems{
+    float:right;
+    width:300px;
+    height:100%;
+    margin-right:62px;
+}
+
+.navItems ul{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    list-style: none;
+    line-height:70px;
+    font-size:15px;
+    font-weight:600;
+}
+
+.navItems ul li:hover{
+    text-decoration: underline;
+    text-underline-position: below;
+    text-underline-offset: 12px;
+}
+
+.topText{
+    text-align: center;
+    line-height: 72px;
+    margin:96px;
+}
+
+.topText h1{
+    font-size:64px;
+    font-weight: 400;
+}
+
+.topText h2{
+    font-size:24px;
+    font-weight: 300;
+}
+
+.urunAl{
+    width:520px;
+    margin:0px auto;
+}
+
+.urunAl h3{
+    margin-left:16px;
+}
+
+.urunAl input{
+    border:1px solid #2e2e2e;
+    height:36px;
+    margin-left: 16px;
+    margin-top:16px;
+    text-indent: 16px;
+}
+
+#indexInputSubmit{
+    text-indent: 0px;
+    padding:10px;
+    height:38px;
+    background: #0984e3;
+    color:#fff;
+    border:none;
+    
+}
+
+.alisverisListem{
+    width:768px;
+    margin:96px auto;
+}
+
+
+table {
+    margin-top:16px;
+    border-collapse: collapse;
+    width: 100%;
+  }
+  
+  td, th {
+    border: 1px solid #dddddd;
+    text-align: left;
+    padding: 8px;
+  }
+  
+  tr:nth-child(even) {
+    background-color: #dddddd;
+  }
+
+  #adminIslem{
+      padding:10px;
+      background: #0984e3;
+      color:#fff;
+  }
+
+
+  .kullaniciFormu{
+    width:520px;
+    margin:0px auto;
+}
+
+.kullaniciFormu h3{
+    margin-left:16px;
+}
+
+.kullaniciFormu input{
+    border:1px solid #2e2e2e;
+    width:100%;
+    height:36px;
+    margin-left: 16px;
+    margin-top:16px;
+    text-indent: 16px;
+    display:flex;
+    flex-direction: column;
+}
+
+.kullaniciFormu h3{
+    margin-top:30px;
+    text-align: center;
+}
+
+
+
+#loginInputSubmit, #signupInputKayit, #signupInputDevam{
+    text-indent: 0px;
+    width:120px;
+    height:38px;
+    background: #0984e3;
+    color:#fff;
+    border:none;
+    margin:16px auto;
+    font-size:16px;
+    font-weight: bold;
+    letter-spacing: 1px;
+}
+
+#loginInputSubmit{padding:10px 38px;}
+
+#signupInputKayit{padding:10px 26px;}
+
+#signupInputDevam{padding:10px 20px;}
+
+#kayitS2{display:none;}

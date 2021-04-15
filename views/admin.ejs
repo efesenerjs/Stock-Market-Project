@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="tr-TR">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><%=title%></title>
+
+</head>
+<body>
+    <%-include('header.ejs')%>
+    
+    <section class="topText">
+        <h1>ADMİN PANEL</h1>
+        <h2>Kullanıcı taleplerini yönetin</h2>
+    </section>
+
+    <section class="alisverisListem">
+        <h3>Bakiye güncelleme talepleri</h3>    
+        <table>
+            <tr>
+              <th>Kullanıcı</th>
+              <th>Miktar</th>
+              <th>İşlem</th>
+            </tr>
+            <tr>
+              <td>efesener</td>
+              <td>500₺</td>
+              <td><button id="adminIslem">ONAYLA</button></td>
+            </tr>
+            
+          </table>
+    </section>
+
+    <section class="alisverisListem">
+        <h3>Yeni Ürün Talepleri</h3>    
+        <table>
+            <tr>
+              <th>Kullanıcı</th>
+              <th>Ürün</th>
+              <th>Miktar (KG)</th>
+              <th>KG/Fiyat</th>
+              <th>İşlem</th>
+            </tr>
+            <tr>
+              <td>Büşra</td>  
+              <td>Buğday</td>
+              <td>50 kg</td>
+              <td>2₺</td>
+              <td><button id="adminIslem">ONAYLA</button></td>
+            </tr>
+            
+          </table>
+    </section>
+
+    <section class="alisverisListem">
+      <h3>Gerçekleşen Alım-Satımlar</h3>    
+      <table>
+          <tr>
+            <th>Alıcı</th>
+            <th>Satıcı</th>
+            <th>Ürün</th>
+            <th>Miktar</th>
+            <th>Toplam Fiyat</th>
+            <th>Tarih</th>
+          </tr>
+          <tr>
+            <td>Efe</td>
+            <td>Büşra</td>  
+            <td>Buğday</td>
+            <td>50 kg</td>
+            <td>550₺</td>
+            <td>15.04.2021</td>
+          </tr>
+          
+        </table>
+  </section>
+
+    
+</body>
+</html>

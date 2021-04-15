@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="tr-TR">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><%=title%></title>
+
+</head>
+<body>
+    <%-include('header.ejs')%>
+    
+    <section class="topText">
+        <h1>Kayıt Ol</h1>
+    </section>
+
+    <section class="kullaniciFormu" id="kayitS1">
+        <form action="/signup" method="post">
+            <input type="text" name="kullaniciAdi" id="indexInputText" placeholder="Kullanıcı Adı">
+            <input type="password" name="kullaniciSifre" id="indexInputNumber" placeholder="Şifre">
+            <input type="submit" value="Kayıt Ol" id="signupInputKayit">
+         </form>
+         <h3>Zaten bir hesabın var mı? <a href="/login"><span style="color:#0984e3;">Giriş Yap</span></a></h3>
+    </section>
+
+    <section class="kullaniciFormu" id="kayitS2">
+        <form action="/signup" method="post">
+            <input type="text" name="kullaniciAd" id="indexInputText" placeholder="Ad">
+            <input type="text" name="kullaniciSoyad" id="indexInputNumber" placeholder="Soyad">
+            <input type="mail" name="kullaniciEposta" id="indexInputText" placeholder="Eposta">
+            <input type="text" name="kullaniciTc" id="indexInputText" placeholder="TC No">
+            <input type="text" name="kullaniciTel" id="indexInputNumber" placeholder="Telefon Numarası">
+            <input type="submit" value="Devam Et" id="signupInputDevam">
+         </form>
+         
+    </section>
+
+    <script>
+        const btn = document.getElementById('signupInputKayit');
+        const form1 = document.getElementById('kayitS1');
+        const form2 = document.getElementById('kayitS2');
+
+        btn.addEventListener("click", () => {
+            form1.style.display = none;
+            form2.style.display = block;
+        })
+    </script>
+    
+</body>
+</html>

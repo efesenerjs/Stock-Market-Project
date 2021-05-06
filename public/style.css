@@ -171,3 +171,9 @@ table {
 #signupInputDevam{padding:10px 20px;}
 
 #kayitS2{display:none;}
+
+#notVisibleInput{
+    width:1px;
+    height:1px;
+    border:0;
+}

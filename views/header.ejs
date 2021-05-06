@@ -15,9 +15,22 @@
         <div class="logo"><a href="/">BORSA</a></div>
         <div class="navItems">
             <ul>
-                <a href="/myproducts"><li>Ürünlerim</li></a>
-                <a href="/wallet"><li>Cüzdanım</li></a>
-                <a href="/login"><li>Giriş</li></a>
+                <%if(title == 'Admin Panel'){%>
+                    <a href="#"><li></li></a>
+                    <a href="#"><li></li></a>
+                    <a href="/logout"><li>Çıkış</li></a>
+                <% }else{ %>
+                    
+                    <% if(user) { %>
+                    <a href="/myproducts"><li>Ürünlerim</li></a>
+                    <a href="/wallet"><li>Cüzdanım</li></a>
+                    <a href="/logout"><li>Çıkış</li></a>
+                    <% }else { %>
+                        <a href="#"><li></li></a>
+                        <a href="#"><li></li></a>
+                        <a href="/login"><li>Giriş</li></a>
+                    <% } %>
+                <% } %>
             </ul>
         </div>
     </nav>

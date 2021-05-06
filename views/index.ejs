@@ -18,28 +18,36 @@
     <section class="urunAl">
         <h3>Ürün alma isteğinde bulunun</h3>
         <form action="" method="post">
-            <input type="text" name="urunAdi" id="indexInputText" placeholder="Ürün Adı (Buğday)">
-            <input type="number" name="urunMiktari" id="indexInputNumber" placeholder="Miktar (50 kg)">
+            <input type="text" name="product" id="indexInputText" placeholder="Ürün Adı (Buğday)">
+            <input type="number" name="amount" id="indexInputNumber" placeholder="Miktar (50 kg)">
             <input type="submit" value="Talep Oluştur" id="indexInputSubmit">
+            <input type="text" name="username" id="notVisibleInput" value="<%=user.username%>">
          </form>
     </section>
 
     <section class="alisverisListem">
-        <h3>Alışveriş Listem</h3>    
+        <h3>Alınacak Ürünler Listesi</h3>    
         <table>
             <tr>
               <th>Ürün</th>
               <th>Miktar</th>
-              <th>Durum</th>
               <th>Tarih</th>
             </tr>
+            <% request.forEach(request => {
+              var date = new Date(request.createdAt);  // dateStr you get from mongodb
+                var d = date.getUTCDate();
+                var m = date.getUTCMonth()+1;
+                var y = date.getUTCFullYear();
+                var showDate = d+"/"+m+"/"+y
+              %>
             <tr>
-              <td>Buğday</td>
-              <td>50 kg</td>
-              <td>Bekliyor</td>
-              <td>15.04.2021</td>
+              
+              <td><%=request.product %></td>
+              <td><%=request.amount %> kg</td>
+              <td><%=showDate%></td>
+              
             </tr>
-            
+            <% }) %>
           </table>
     </section>
 
@@ -54,15 +62,22 @@
               <th>Toplam Fiyat</th>
               <th>Tarih</th>
             </tr>
+            <% trade.forEach(trade => {
+              var date = new Date(trade.createdAt);  // dateStr you get from mongodb
+                var d = date.getUTCDate();
+                var m = date.getUTCMonth()+1;
+                var y = date.getUTCFullYear();
+                var showTradeDate = d+"/"+m+"/"+y
+              %>
             <tr>
-              <td>Efe</td>
-              <td>Büşra</td>  
-              <td>Buğday</td>
-              <td>50 kg</td>
-              <td>550₺</td>
-              <td>15.04.2021</td>
+              <td><%=trade.buyerID %></td>
+              <td><%=trade.sellerID %></td>  
+              <td><%=trade.product %></td>
+              <td><%=trade.amount %> kg</td>
+              <td><%=trade.totalPrice %>₺</td>
+              <td><%=showTradeDate%></td>
             </tr>
-            
+            <% }) %>
           </table>
     </section>
 

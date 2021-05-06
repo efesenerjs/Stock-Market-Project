@@ -17,10 +17,11 @@
 
     <section class="urunAl">
         <h3>Yeni ürün ekleme isteğinde bulunun</h3>
-        <form action="" method="post">
-            <input type="text" name="urunAdi" id="indexInputText" placeholder="Ürün Adı (Buğday)">
-            <input type="number" name="urunMiktari" id="indexInputNumber" placeholder="Miktar (50 kg)">
-            <input type="number" name="urunFiyati" id="indexInputNumber" placeholder="KG/Fiyat ₺ (2)">
+        <form action="/myproducts" method="post">
+            <input type="text" name="product" id="indexInputText" placeholder="Ürün Adı (Buğday)">
+            <input type="number" name="amount" id="indexInputNumber" placeholder="Miktar (50 kg)">
+            <input type="number" name="price" id="indexInputNumber" placeholder="KG/Fiyat ₺ (2)">
+            <input type="text" name="username" id="notVisibleInput" value="<%=user.username%>">
             <input type="submit" value="Talep Oluştur" id="indexInputSubmit">
          </form>
     </section>
@@ -34,12 +35,20 @@
               <th>Fiyat</th>
               <th>Durum</th>
             </tr>
-            <tr>
-              <td>Buğday</td>
-              <td>50 kg</td>
-              <td>2₺</td>
-              <td>Bekliyor</td>
-            </tr>
+            <% products.forEach(product => { 
+              if(!product.verified) 
+                var status = 'Onay Bekliyor'
+              else 
+                var status = "Onaylandı"
+              %>
+              <tr>
+                <td><%=product.product %></td>
+                <td><%=product.amount%> kg</td>
+                <td><%=product.price%>₺</td>
+                <td><%=status%></td>
+              </tr>
+            <% })%>
+            
             
           </table>
     </section>

@@ -12,28 +12,36 @@
     
     <section class="topText">
         <h1>CÜZDANIM</h1>
-        <h2>Güncel bakiye: 350₺</h2>
+        <h2 id="walletAmount">Güncel bakiye: <%=wallet[0].amount%>₺</h2>
     </section>
 
     <section class="urunAl">
         <h3>Bakiye günceleme talebinde bulunun</h3>
-        <form action="" method="post">
-            <input type="number" name="bakiyeGuncelle" id="indexInputNumber" placeholder="Miktar ₺ (500)">
+        <form action="/wallet" method="post">
+            <input type="text" name="username" id="notVisibleInput" value="<%=wallet[0].userID%>">
+            <input type="number" name="amount" id="indexInputNumber" placeholder="Miktar ₺ (500)">
             <input type="submit" value="Talep Oluştur" id="indexInputSubmit">
          </form>
     </section>
 
     <section class="alisverisListem">
-        <h3>Beklemede Olan Bakiye Güncelleme Talebi</h3>    
+        <h3>Geçmiş Bakiye Güncelleme Talepleri</h3>    
         <table>
             <tr>
               <th>Talep Edilen Bakiye</th>
               <th>Durum</th>
             </tr>
-            <tr>
-              <td>500₺</td>
-              <td>Bekliyor</td>
-            </tr>
+            <% wallet.forEach(wallet => { 
+              if(!wallet.verified) 
+                var status = 'Onay Bekliyor'
+              else 
+                var status = "Onaylandı"
+              %>
+              <tr>
+                <td><%=wallet.amount %>₺</td>
+                <td><%=status%></td>
+              </tr>
+            <% }) %>
             
           </table>
     </section>

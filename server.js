@@ -28,7 +28,7 @@ mongoose.set('useFindAndModify', false) // MONGOOSE tan warning almamak için
 app.use(express.static('public'))
 app.use(express.urlencoded({extended: true})) //body request parse edebilmek için
 app.use((req,res,next) => {
-    console.log(req.method)
+    // console.log(req.method) request methodunu yazdırır
     next()
 })
 app.use('/',authRoutes)
@@ -40,7 +40,7 @@ app.get('*', checkUser)
 app.get('/deleterequest', function(req,res){ // delete all requests
     Requests.findOneAndDelete()
     .then((result) => {
-        console.log(result)
+        console.log("Silinen urun: ", result)
         res.redirect("/")
     })
 })
@@ -70,7 +70,8 @@ app.post('/', function (req,res){
     const request = new Requests({ // yeni request oluştur
         userID: req.body.username,
         product: req.body.product,
-        amount: req.body.amount
+        amount: req.body.amount,
+        price: req.body.price
     })
     request.save()
     .then((result) => {
@@ -99,7 +100,7 @@ app.post('/wallet', function (req, res) { // Bakiye güncelleme talebi
         amount: req.body.amount,
         verified: false
     }) 
-    console.log(req.body.username)
+    // console.log(req.body.username) kullanıcı adını yazdırır
     wallet.save()
     res.redirect('/wallet')
 })
@@ -120,6 +121,7 @@ app.post('/myproducts', function (req, res){ // POST etme
         userID: req.body.username,
         product: req.body.product,
         amount: req.body.amount,
+        minAmount: req.body.minAmount,
         price: req.body.price,
         verified: false
     })
@@ -138,13 +140,13 @@ app.post('/verifywallet', function(req,res){
             console.log(err)
         }
         else{
-            console.log("deleted", deletedWallet)
+            console.log("Silinen cuzdan: ", deletedWallet)
 
             Wallets.findByIdAndUpdate(req.body._id,{$set: {verified: true}}, function(err,newWallet){ // ilgili wallet ı doğrular
                 if(err){
                     console.log(err)
                 }else{
-                    console.log(newWallet.userID)
+                    // console.log(newWallet.userID) yeni cüzdan yaratıldığını gösterir
                     Wallets.find({"verified": "false"}) // cüzdanları bul
                         .then((result) => {
                             var walletResult = result
@@ -176,7 +178,7 @@ app.post('/verifyproduct', function(req,res){
            console.log(err)
        }
        else{
-            console.log("The product verified!", updatedProduct)
+            console.log("The product verified!: ", updatedProduct)
 
             Products.find({"verified": "false"}) // yönlendirme
             .then((result) => {

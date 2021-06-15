@@ -4,9 +4,9 @@ const Requests = require("../models/requests")
 const Trades = require("../models/trades")
 
 const whenNewRequest = (request) => {
-    console.log(request.product)
+    console.log("Alinmak istenen urun: " + request.product)
 
-    Products.find({"product": request.product}).sort({price: 1}) // fiyata göre sıralandı
+    Products.find({"product": request.product, "price": {$lte: request.price}, "minAmount": {$lte: request.amount} }).sort({price: 1}) // fiyata göre sıralandı
         .then((result) => {
 
             var requestedProduct = result // satın almak istenilen ürün
@@ -17,20 +17,27 @@ const whenNewRequest = (request) => {
                     var buyersWallet = result
                     var walletAmount = buyersWallet.amount // kullanıcının cüzdan bakiyesi
                     
-                    console.log(requestedProduct.length)
-                    console.log("baslangic bakiye",walletAmount)
-                    console.log("baslangic amount", requestedAmount)
+                    console.log("Toplam bulunan urun: ", requestedProduct.length)
+                    console.log("Kullanici baslangic para: ", walletAmount)
+                    console.log("Alinmak istenen baslangic urun miktarı: ", requestedAmount)
                    
                     var i, amountSold, tPrice, productTotalPrice
                         
                     for(i=0;i<requestedProduct.length;i++){
+                       
+                        // alıcının alacağı ürün, satıcının elindeki üründen fazla mı az mı?
+                        if(requestedAmount >= requestedProduct[i].amount){ 
+                            productTotalPrice = requestedProduct[i].amount*requestedProduct[i].price
+                        }else{
+                            productTotalPrice = requestedAmount*requestedProduct[i].price
+                        }
 
-                        productTotalPrice = requestedProduct[i].amount*requestedProduct[i].price
+                        console.log("Alıcının cebinden cikacak para: ", productTotalPrice)
 
                         if(requestedAmount > 0 && walletAmount >= productTotalPrice){
 
-                            console.log(i, requestedAmount)
-                            console.log("requested amount son", requestedProduct[i].amount)
+                            console.log("Kacinci urun: ", i+1, "Alinmak istenen kalan urun miktari:", requestedAmount)
+                            
 
                             if(requestedAmount >= requestedProduct[i].amount){
                                 requestedAmount -= requestedProduct[i].amount
@@ -41,7 +48,7 @@ const whenNewRequest = (request) => {
                                 //product u sil
                                 Products.findOneAndDelete({"_id": requestedProduct[i]._id})
                                 .then((result) => {
-                                    console.log("product silindi")
+                                    console.log("Ürün silindi!")
                                 })
                                 .catch((err) => {
                                     console.log(err)
@@ -56,7 +63,7 @@ const whenNewRequest = (request) => {
                                         console.log(err)
                                     }
                                     else{
-                                        console.log("satılan ürün güncellemesi", updatedProduct)
+                                        console.log("Satılan ürün güncellemesi: ", updatedProduct)
                                     }
                                 })
                                 
@@ -83,7 +90,7 @@ const whenNewRequest = (request) => {
                                     console.log(err)
                                 }
                                 else{
-                                    console.log("satıcının cüzdanı güncellendi")
+                                    console.log("Satıcının cüzdanı güncellendi!")
                                 }
                             })
                         }
@@ -95,7 +102,7 @@ const whenNewRequest = (request) => {
                             console.log(err)
                         }
                         else{
-                            console.log("request guncellendi")
+                            console.log("Request guncellendi!")
                         }
                     })
 
@@ -107,7 +114,7 @@ const whenNewRequest = (request) => {
                                 console.log(err)
                             }
                             else{
-                                console.log("request guncellendi")
+                                console.log("Request guncellendi!")
                             }
                         })
                     } 
@@ -117,7 +124,7 @@ const whenNewRequest = (request) => {
                         .then((result) => {
                             console.log(result)
                         })
-                        console.log("request silinmeli")
+                        console.log("Request silinmeli!")
                     }
                            
                 })

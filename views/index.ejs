@@ -20,6 +20,7 @@
         <form action="" method="post">
             <input type="text" name="product" id="indexInputText" placeholder="Ürün Adı (Buğday)">
             <input type="number" name="amount" id="indexInputNumber" placeholder="Miktar (50 kg)">
+            <input type="number" name="price" id="indexInputNumber" placeholder="Almak İstediğiniz Fiyat (5₺)" style="width:190px;">
             <input type="submit" value="Talep Oluştur" id="indexInputSubmit">
             <input type="text" name="username" id="notVisibleInput" value="<%=user.username%>">
          </form>
@@ -31,6 +32,7 @@
             <tr>
               <th>Ürün</th>
               <th>Miktar</th>
+              <th>İstenilen Alım Fiyatı</th>
               <th>Tarih</th>
             </tr>
             <% request.forEach(request => {
@@ -44,6 +46,7 @@
               
               <td><%=request.product %></td>
               <td><%=request.amount %> kg</td>
+              <td><%=request.price %>₺</td>
               <td><%=showDate%></td>
               
             </tr>

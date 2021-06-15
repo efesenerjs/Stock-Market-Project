@@ -13,6 +13,10 @@ const productSchema = new Schema({
         type: Number,
         lowercase: true
     },
+    minAmount:{
+        type: Number,
+        default: 0
+    },
     price: {
         type: Number,
         lowercase: true

@@ -13,6 +13,10 @@ const requestSchema = new Schema({
     amount: {
         type: Number,
         default: 0 
+    },
+    price: {
+        type: Number,
+        require: true
     }
 }, { timestamps: true}) // otomatik olarak verinin eklendigi tarihi kaydeder
 

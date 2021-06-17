@@ -177,3 +177,16 @@ table {
     height:1px;
     border:0;
 }
+
+#dateInputs{
+    float:right;
+}
+
+#dateRange{
+    margin-bottom: 20px;
+    height:40px;
+    width:140px;
+    text-align: center;
+    border:1px solid #2e2e2e;
+}
+

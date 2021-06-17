@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="tr-TR">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><%=title%></title>
+    
+  
+
+</head>
+
+<body>
+    <%-include('header.ejs')%>
+    
+    <section class="topText">
+        <h1>GEÇMİŞ</h1>
+        <h2>Alışveriş geçmişinizin raporunu alın</h2>
+    </section>
+
+    
+
+    <section class="alisverisListem">
+        <h3>Alışveriş Geçmişim</h3>  
+        
+        <div id="dateInputs">
+          <form action="" method="post">
+            
+            <input type="text" name="username" id="notVisibleInput" value="<%=user.username%>">
+            <label for="birthday">Tarih Aralığı:</label>
+            <input type="date" id="dateRange" name="firstDate">
+            <input type="date" id="dateRange" name="lastDate">
+            <input type="submit" id="indexInputSubmit" value="Filtrele">
+        </form>
+        </div>  
+        
+        <table id="tblStocks">
+            <tr>
+              <th>Alıcı</th>
+              <th>Satıcı</th>
+              <th>Ürün</th>
+              <th>Miktar</th>
+              <th>Toplam Fiyat</th>
+              <th>Tarih</th>
+            </tr>
+            <% trade.forEach(trade => {
+              var date = new Date(trade.createdAt);  // dateStr you get from mongodb
+                var d = date.getUTCDate();
+                var m = date.getUTCMonth()+1;
+                var y = date.getUTCFullYear();
+                var showTradeDate = d+"/"+m+"/"+y
+              %>
+            <tr>
+              <td><%=trade.buyerID %></td>
+              <td><%=trade.sellerID %></td>  
+              <td><%=trade.product %></td>
+              <td><%=trade.amount %> kg</td>
+              <td><%=trade.totalPrice %>₺</td>
+              <td><%=showTradeDate%></td>
+            </tr>
+            <% }) %>
+          </table>
+          <br>
+          <button id="indexInputSubmit" onclick="exportData()">
+            Rapor Al
+        </button>
+    </section>
+    <script>
+      function exportData(){
+        // get the html table element
+        var table = document.getElementById("tblStocks");
+
+        // declare array var
+        var rows = [];
+
+        for(var i=0,row; row = table.rows[i]; i++){
+            column1 = row.cells[0].innerText;
+            column2 = row.cells[1].innerText;
+            column3 = row.cells[2].innerText;
+            column4 = row.cells[3].innerText;
+            column5 = row.cells[4].innerText;
+            column6 = row.cells[5].innerText;
+
+            rows.push([
+                column1,
+                column2,
+                column3,
+                column4,
+                column5,
+                column6
+            ]);
+        }
+
+        csvContent = "data:text/csv;charset=utf-8,";
+
+        rows.forEach(function(rowArray){
+            row = rowArray.join(",");
+            csvContent += row + "\r\n";
+        });
+
+        var encodedUri = encodeURI(csvContent);
+        var link = document.createElement("a");
+        link.setAttribute("href", encodedUri);
+        link.setAttribute("download", "borsarapor.csv");
+        document.body.appendChild(link);
+
+        link.click();
+        
+
+    }
+    </script>
+    
+</body>
+</html>

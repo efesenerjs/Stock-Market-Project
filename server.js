@@ -106,6 +106,96 @@ app.post('/wallet', function (req, res) { // Bakiye güncelleme talebi
 })
 
 
+app.get('/gecmis', function (req, res) {
+    Trades.find({"buyerID": res.locals.user.username}).sort({createdAt: -1}) // gerçekleşen alım satımlar
+        .then((result) => {
+            var buyerResult = result // buyerID si kullanıcı ile eşleşen trade dizisini bu diziye aktarıyoruz
+            Trades.find({"sellerID": res.locals.user.username}).sort({createdAt: -1}) // gerçekleşen alım satımlar
+                .then((result) => {
+                
+
+                 // sellerID si ve buyerID si eşleşen dizileri birleştiriyoruz
+                 var tradeArray = [] 
+                 var i 
+                 for(i=0;i<buyerResult.length;i++){
+                     tradeArray[i] = buyerResult[i]
+                 }
+                 for(i=0;i<result.length;i++){
+                    tradeArray[i] = result[i]
+                }
+
+                console.log(tradeArray)
+                 res.render('gecmis', {title: 'Geçmiş', user: res.locals.user, trade: tradeArray})
+        })
+    })
+})
+
+app.post('/gecmis', function (req, res) {
+
+    // tarih filtresi için gerekli string fonksiyonları
+
+    var firstDate = req.body.firstDate.replace('-', '')
+    firstDate = firstDate.replace('-', '')
+
+    var str = firstDate;
+    var zeroMonth = str.substr(4, 1);
+    var zeroDate = str.substr(6, 1);
+    
+    if(zeroMonth=="0"){
+    str = str.slice(0, 4)+str.slice(5,8)
+        if(zeroDate=="0"){
+        str = str.slice(0, 5)+str.slice(6,7)
+        }
+    }
+    else if(zeroDate=="0"){
+    str = str.slice(0, 6)+str.slice(7,8)
+    }
+
+    firstDate = str
+
+    // tarih filtresi için gerekli string fonksiyonları
+
+    var lastDate = req.body.lastDate.replace('-', '')
+    lastDate = lastDate.replace('-', '')
+
+    var strLast = lastDate;
+    var zeroMonth2 = strLast.substr(4, 1);
+    var zeroDate2 = strLast.substr(6, 1);
+    
+    if(zeroMonth2=="0"){
+        strLast = strLast.slice(0, 4)+strLast.slice(5,8)
+        if(zeroDate2=="0"){
+            strLast = strLast.slice(0, 5)+strLast.slice(6,7)
+        }
+    }
+    else if(zeroDate2=="0"){
+        strLast = strLast.slice(0, 6)+strLast.slice(7,8)
+    }
+
+    lastDate = strLast
+
+    Trades.find({"buyerID": req.body.username, "tarih": {$gte: firstDate, $lte: lastDate}}).sort({createdAt: -1}) // gerçekleşen alım satımlar
+           .then((result) => {
+            
+            var buyerResult = result // buyerID si kullanıcı ile eşleşen trade dizisini bu diziye aktarıyoruz
+            Trades.find({"sellerID": req.body.username, "tarih": {$gte: firstDate, $lte:lastDate}}).sort({createdAt: -1}) // gerçekleşen alım satımlar
+                .then((result) => {
+                   
+
+                 // sellerID si ve buyerID si eşleşen dizileri birleştiriyoruz
+                 var tradeArray = [] 
+                 var i 
+                 for(i=0;i<buyerResult.length;i++){
+                     tradeArray[i] = buyerResult[i]
+                 }
+                 for(i=0;i<result.length;i++){
+                    tradeArray[i] = result[i]
+                }
+                 res.render('gecmis', {title: 'Geçmiş', user: req.body.username, trade: tradeArray})
+        })
+    })
+})
+
 app.get('/myproducts', function (req, res) {
     Products.find({"userID": res.locals.user.username}).sort({createdAt: -1})
         .then((result) => {

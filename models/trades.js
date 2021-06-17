@@ -16,6 +16,9 @@ const tradeSchema = new Schema({
         type: Number,
         lowercase: true
     },
+    tarih: {
+        type: Number
+    },
     totalPrice: {
         type: Number,
         lowercase: true

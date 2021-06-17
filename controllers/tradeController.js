@@ -71,12 +71,18 @@ const whenNewRequest = (request) => {
                                 requestedAmount = 0
                             }
                             
+                            var date = new Date()  // dateStr you get from mongodb
+                            var d = date.getUTCDate()
+                            var m = date.getUTCMonth()+1
+                            var y = date.getUTCFullYear()
+                            var tradeDate = y+""+m+""+d
                             // SATIŞ GERÇEKLEŞTİĞİNDE YENİ TRADE KAYDI OLUŞTUR 
                             const newTrade = new Trades({
                                 sellerID: requestedProduct[i].userID,
                                 buyerID: request.userID,
                                 product: request.product,
                                 amount: amountSold,
+                                tarih: tradeDate,
                                 totalPrice: tPrice
                             })
                             newTrade.save()

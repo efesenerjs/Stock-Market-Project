@@ -88,7 +88,20 @@ const whenNewRequest = (request) => {
                             newTrade.save()
 
                             // SATIŞ SONRASI ALICININ CÜZDANINI GÜNCELLE
-                            walletAmount -= tPrice
+
+                            var komisyonluUcret = Math.floor(tPrice*1.1) // %1 lik komisyon alınıyor
+                            walletAmount -= komisyonluUcret
+                            
+                            // MUHASEBECİ CÜZDAN GÜNCELEME
+                            var muhasebeciPara = komisyonluUcret - tPrice // komisyonlu ücretten satıcıya giden parayı cıkarıp muhasebeciye giden parayı alıyoruz
+                            Wallets.findOneAndUpdate({"userID": "muhasebeci", "verified": true},{$inc: {amount: muhasebeciPara}}, function(err,updatedAccounterWallet){ 
+                                if(err){
+                                    console.log(err)
+                                }
+                                else{
+                                    console.log("Komisyon geliri: ", muhasebeciPara)
+                                }
+                            })
                             
                             // SATICININ CÜZDANINI GÜNCELLEME
                             Wallets.findOneAndUpdate({"userID": requestedProduct[i].userID, "verified": true},{$inc: {amount: tPrice}}, function(err,updatedSellerWallet){ 
@@ -96,7 +109,7 @@ const whenNewRequest = (request) => {
                                     console.log(err)
                                 }
                                 else{
-                                    console.log("Satıcının cüzdanı güncellendi!")
+                                    console.log("Satıcı geliri: ", tPrice)
                                 }
                             })
                         }
@@ -108,9 +121,11 @@ const whenNewRequest = (request) => {
                             console.log(err)
                         }
                         else{
-                            console.log("Request guncellendi!")
+                            console.log("Alıcı gideri:", komisyonluUcret)
                         }
                     })
+                    
+                    
 
                     // Kullanıcının istediği ürün miktarı karşılanmadıysa 
                     if(requestedAmount>0){

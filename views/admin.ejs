@@ -27,12 +27,14 @@
               %>
               <tr>
                 <td><%=wallet.userID %></td>
-                <td><%=wallet.amount %>₺</td>
+                <td><%=wallet.amount + " " + wallet.currency %></td>
                 <td>
                   <form action="/verifywallet" method="post">
                     <input type="submit" id="adminIslem" value="ONAYLA">
                     <input type="text" name="_id" id="notVisibleInput" value="<%=wallet._id%>">
                     <input type="text" name="userID" id="notVisibleInput" value="<%=wallet.userID%>">
+                    <input type="text" name="amount" id="notVisibleInput" value="<%=wallet.amount%>">
+                    <input type="text" name="currency" id="notVisibleInput" value="<%=wallet.currency%>">
                   </form>
                 </td>
               </tr>

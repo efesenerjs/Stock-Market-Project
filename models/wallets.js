@@ -10,6 +10,10 @@ const walletSchema = new Schema({
         type: Number,
         default: 0 
     },
+    currency: {
+        type: String,
+        default: "TRY"
+    },
     verified: {
         type: Boolean,
         lowercase: true,

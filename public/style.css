@@ -190,3 +190,11 @@ table {
     border:1px solid #2e2e2e;
 }
 
+#dropdownInput{
+    border:1px solid #2e2e2e;
+    width:80px;
+    height:36px;
+    margin-left: 16px;
+    margin-top:16px;
+    text-indent: 16px;
+}

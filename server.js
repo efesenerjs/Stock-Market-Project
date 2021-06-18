@@ -11,6 +11,8 @@ const authRoutes = require('./routes/authRoutes')
 const {requireAuth, checkUser} = require('./middlewares/authMiddleware') // ara katmanlar
 const tradeController = require('./controllers/tradeController') // alış-satış kontrollerini kullanabilmek için
 const Trades = require('./models/trades')
+const XMLHttpRequest = require("xmlhttprequest").XMLHttpRequest
+const { json } = require('express')
 
 
 
@@ -98,6 +100,7 @@ app.post('/wallet', function (req, res) { // Bakiye güncelleme talebi
     const wallet = new Wallets({
         userID: req.body.username,
         amount: req.body.amount,
+        currency: req.body.currency,
         verified: false
     }) 
     // console.log(req.body.username) kullanıcı adını yazdırır
@@ -224,6 +227,9 @@ app.post('/myproducts', function (req, res){ // POST etme
         })
 })
 
+
+
+
 app.post('/verifywallet', function(req,res){
     Wallets.findOneAndDelete({userID: req.body.userID}, function (err, deletedWallet){ // kullanıcın doğrulanmış son walletını siler
         if(err){
@@ -232,29 +238,59 @@ app.post('/verifywallet', function(req,res){
         else{
             console.log("Silinen cuzdan: ", deletedWallet)
 
-            Wallets.findByIdAndUpdate(req.body._id,{$set: {verified: true}}, function(err,newWallet){ // ilgili wallet ı doğrular
-                if(err){
-                    console.log(err)
-                }else{
-                    // console.log(newWallet.userID) yeni cüzdan yaratıldığını gösterir
-                    Wallets.find({"verified": "false"}) // cüzdanları bul
-                        .then((result) => {
-                            var walletResult = result
+            // API Çağrısı ile döviz bilgisi alıyoruz
+            // promise yapısı kurduk
+            const getData=(url)=>{
+                return new Promise((resolve,reject)=>{
+                    const xhr = new XMLHttpRequest()
+                    xhr.addEventListener("readystatechange", () => {
+                        if(xhr.readyState==4 && xhr.status==200){
+                            const data = JSON.parse(xhr.responseText)
+                            const roundedData = Math.round(data.rates.TRY)
+                            resolve(roundedData)
+                        }else if(xhr.readyState==4){
+                            reject("veriye erişilemedi")
+                        }
+                    })
+                    xhr.open("GET", url)
+                    xhr.send()
+                })
+            }
+        
+            getData('https://api.exchangerate.host/latest?base='+req.body.currency+'&symbols=TRY&amount='+req.body.amount)
+            // API den veri dönerse işleme devam ediyoruz
+            .then((data)=>{
 
-                            Products.find({"verified": "false"}) // cüzdan bulma başarılıysa ürünleri bul
+                Wallets.findByIdAndUpdate(req.body._id,{$set: {verified: true, amount:data, currency: 'TRY'}}, function(err,newWallet){ // ilgili wallet ı doğrular
+                    if(err){
+                        console.log(err)
+                    }else{
+                        // console.log(newWallet.userID) yeni cüzdan yaratıldığını gösterir
+                        Wallets.find({"verified": "false"}) // cüzdanları bul
                             .then((result) => {
-                                var productResult = result
-                                res.redirect('/admin')
+                                var walletResult = result
+    
+                                Products.find({"verified": "false"}) // cüzdan bulma başarılıysa ürünleri bul
+                                .then((result) => {
+                                    var productResult = result
+                                    res.redirect('/admin')
+                                })
+                                .catch((err) => {
+                                    console.log(err)
+                                })
                             })
                             .catch((err) => {
                                 console.log(err)
                             })
-                        })
-                        .catch((err) => {
-                            console.log(err)
-                        })
-                }
+                    }
+                })
+
             })
+            .catch((err)=>{
+                console.log(err)
+            })
+
+            
         }
     })
 

@@ -18,8 +18,13 @@
     <section class="urunAl">
         <h3>Bakiye günceleme talebinde bulunun</h3>
         <form action="/wallet" method="post">
-            <input type="text" name="username" id="notVisibleInput" value="<%=wallet[0].userID%>">
+            <input type="text" style="margin-left:-5px" name="username" id="notVisibleInput" value="<%=wallet[0].userID%>">
             <input type="number" name="amount" id="indexInputNumber" placeholder="Miktar ₺ (500)">
+            <select name="currency" id="dropdownInput">
+              <option value="TRY">TRY</option>
+              <option value="USD">USD</option>
+              <option value="EUR">EUR</option>
+            </select>
             <input type="submit" value="Talep Oluştur" id="indexInputSubmit">
          </form>
     </section>
@@ -38,7 +43,7 @@
                 var status = "Onaylandı"
               %>
               <tr>
-                <td><%=wallet.amount %>₺</td>
+                <td><%=wallet.amount +" "+ wallet.currency %></td>
                 <td><%=status%></td>
               </tr>
             <% }) %>
